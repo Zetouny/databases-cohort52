@@ -1,42 +1,51 @@
-import mysql from "mysql2";
+import mysql from "mysql2/promise";
 
-var connection = mysql.createConnection({
+const connection = await mysql.createConnection({
   host: "localhost",
   user: "hyfuser",
   password: "hyfpassword",
-  database: "food_recipes",
 });
 
 connection.connect();
 
-const create_recipes = `create table recipes (
-  id int,
-  name varchar(100),
-  ingredients text(100),
-  steps varchar(100),
-  cooking_time int,
-  category varchar(100),
-  )`;
+try {
+  await connection.query("CREATE DATABASE IF NOT EXISTS food_recipes");
+  await connection.query("USE food_recipes");
 
-const create_ingredients = `create table ingredients (
-  id int,
-  name varchar(100)
-  )`;
+  await connection.query(`CREATE TABLE recipes (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100),
+    cooking_time INT
+  )`);
 
-const create_steps = `create table steps (
-  id int,
-  instructions varchar(100)
-  )`;
+  await connection.query(`CREATE TABLE ingredients (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100)
+  )`);
 
-const create_categories = `create table categories (
-  id int,
-  name varchar(100)
-  )`;
+  await connection.query(`CREATE TABLE steps (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  instructions VARCHAR(100)
+  )`);
 
-// connection.query(create_recipes, function (error, results, fields) {
-//   if (error) {
-//     throw error;
-//   }
-//   console.log("the reply is ", results[0]);
-// });
-// connection.end();
+  await connection.query(`CREATE TABLE categories (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100)
+  )`);
+
+  const [invitee_rows] = await connection.query(`SHOW TABLES`);
+  // console.log("\n Invitee Table:");
+  console.table(invitee_rows);
+} catch (error) {
+  console.log(error);
+}
+
+try {
+  const [results, fields] = await connection.query(
+    `drop database food_recipes`
+  );
+} catch (error) {
+  console.log(error);
+}
+
+connection.end();
