@@ -6,8 +6,6 @@ const connection = await mysql.createConnection({
   password: "hyfpassword",
 });
 
-connection.connect();
-
 try {
   await connection.query("CREATE DATABASE IF NOT EXISTS food_recipes");
   await connection.query("USE food_recipes");
@@ -42,10 +40,10 @@ try {
 
   await connection.query(`CREATE TABLE recipe_steps (
     recipe_id INT NOT NULL,
-    steps_id INT NOT NULL,
-    PRIMARY KEY (recipe_id, steps_id),
+    step_id INT NOT NULL,
+    PRIMARY KEY (recipe_id, step_id),
     FOREIGN KEY (recipe_id) REFERENCES recipes(id) ON DELETE CASCADE,
-    FOREIGN KEY (steps_id) REFERENCES steps(id) ON DELETE CASCADE
+    FOREIGN KEY (step_id) REFERENCES steps(id) ON DELETE CASCADE
   )`);
 
   await connection.query(`CREATE TABLE recipe_categories (
@@ -69,4 +67,4 @@ try {
   console.log(error);
 }
 
-connection.end();
+await connection.end();
