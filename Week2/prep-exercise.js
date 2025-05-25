@@ -68,3 +68,5 @@ try {
 }
 
 await connection.end();
+
+// Diagram can be found in Diagram.drawio.svg
