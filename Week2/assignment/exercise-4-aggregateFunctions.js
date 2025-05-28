@@ -22,7 +22,7 @@ try {
 
   // Challenge 2 - Sum of the research papers published by all female authors.
   const [researchPapersByFemales] = await connection.query(`
-    SELECT COUNT(ap.paper_id) AS Count
+    SELECT COUNT(DISTINCT ap.paper_id) AS Count
     FROM authors AS a
     JOIN authorPapers AS ap ON a.author_id = ap.author_id
     WHERE a.gender = 'Female';
@@ -43,7 +43,7 @@ try {
 
   // Challenge 4 - Sum of the research papers of the authors per university.
   const [SumResearchPerUniversity] = await connection.query(`
-    SELECT a.university, COUNT(ap.paper_id)
+    SELECT a.university, COUNT(DISTINCT ap.paper_id)
     FROM authors AS a
     JOIN authorPapers AS ap ON a.author_id = ap.author_id
     GROUP BY a.university

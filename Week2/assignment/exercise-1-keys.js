@@ -26,7 +26,7 @@ try {
   // Step 2 - add mentors column and add a foreign key references author_id
   await connection.query(`ALTER TABLE authors
     ADD COLUMN mentor INT,
-    ADD FOREIGN KEY (mentor) REFERENCES authors(author_id)
+    ADD FOREIGN KEY (mentor) REFERENCES authors(author_id) ON UPDATE CASCADE ON DELETE SET NULL,
   `);
 
   const [authors] = await connection.query(`DESCRIBE authors`);
