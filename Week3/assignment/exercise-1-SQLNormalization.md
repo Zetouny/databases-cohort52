@@ -20,8 +20,6 @@ Members Table
 | member_id      | INT (Primary Key) |
 | member_name    | VARCHAR           |
 | member_address | VARCHAR           |
-| dinner_id      | INT               |
-| dinner_date    | DATE              |
 +----------------+-------------------+
 ```
 
@@ -31,7 +29,7 @@ Dinner Table
 | Venues                                |
 +-------------------+-------------------+
 | dinner_id         | INT (Primary Key) |
-| dinner_date       | VARCHAR           |
+| dinner_date       | DATE              |
 | member_id         | INT (FOREIGN KEY) |
 +-------------------+-------------------+
 ```
