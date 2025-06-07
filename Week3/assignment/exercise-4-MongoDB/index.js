@@ -74,10 +74,8 @@ async function findEpisodesExercises(client) {
     .collection("bob_ross_episodes")
     .find({ elements: "CLIFF" });
 
-  const EpisodesWithCliffArray = [];
-  for await (const episode of findEpisodesWithCliff) {
-    EpisodesWithCliffArray.push(episode.title);
-  }
+  const episodes = await findEpisodesWithCliff.toArray();
+  const EpisodesWithCliffArray = episodes.map((episode) => episode.title);
 
   console.log(
     `The episodes that Bob Ross painted a CLIFF are ${EpisodesWithCliffArray.join(

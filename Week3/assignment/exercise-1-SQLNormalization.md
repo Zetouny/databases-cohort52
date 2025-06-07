@@ -30,7 +30,6 @@ Dinner Table
 +-------------------+-------------------+
 | dinner_id         | INT (Primary Key) |
 | dinner_date       | DATE              |
-| member_id         | INT (FOREIGN KEY) |
 +-------------------+-------------------+
 ```
 
